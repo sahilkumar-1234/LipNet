@@ -103,10 +103,20 @@ if uploaded_video_path:
     st.info(f"Using video: **{os.path.basename(file_path)}**")
 
     # Convert and render the video
-    os.system(f"ffmpeg -i {file_path} -vcodec libx264 selected_video.mp4 -y")
-    video = open("selected_video.mp4", "rb")
-    video_bytes = video.read()
-    st.video(video_bytes)
+# Convert and render the video safely (absolute path)
+    converted_path = os.path.join(os.path.dirname(__file__), "selected_video.mp4")
+    
+    # Run ffmpeg to convert the file to standard MP4
+    os.system(f"ffmpeg -i \"{file_path}\" -vcodec libx264 \"{converted_path}\" -y")
+    
+    # Check and display
+    if os.path.exists(converted_path):
+        with open(converted_path, "rb") as video:
+            video_bytes = video.read()
+        st.video(video_bytes)
+    else:
+        st.error("❌ Could not find or generate selected_video.mp4 — please check ffmpeg or your file path.")
+
 
     # If it's a dataset video, try loading true labels
     filename = os.path.splitext(os.path.basename(file_path))[0]
