@@ -24,11 +24,7 @@ with st.sidebar:
     st.image(os.path.join(media_path, "computerVision.jpg"))
     
     st.info("""This application is an implemention of the LipNet paper. The goal is to create a computer vision model 
-            (LipNet) that can read lips through videos.
-            Here is how two versions of the model perform on training and test data. You can find more information in 
-            my article on this project on medium. If you want to check the evolution of the loss through epochs, click
-            on the button below.
-            Hope you enjoy it!!""")
+            (LipNet) that can read lips through videos.Hope you enjoy it!!""")
     def click_loss_button():
         st.session_state.loss = True
     def unclick_loss_button():
